@@ -6,6 +6,22 @@
 #include "disk.h"
 
 /**
+ * Determines if all characters in an array are null.
+ *
+ * @param arr The array to check.
+ * @param amt The amount of bytes to check.
+ * @return If all of the bytes are null.
+ */
+char all_null(char *arr, uint32_t amt) {
+    for (uint32_t i = 0; i < amt; i++) {
+        if (arr[i]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+/**
  * Retrieves all HDD serials.
  */
 void retrieve_hdd_serials() {
@@ -99,7 +115,7 @@ void retrieve_mac_addresses() {
         }
 
         /* null mac */
-        if (resp_buffer[0] == 0 && resp_buffer[1] == 0 && resp_buffer[2] == 0 && resp_buffer[3] == 0 && resp_buffer[4] == 0 && resp_buffer[5] == 0) {
+        if (all_null(resp_buffer, 6)) {
             continue;
         }
 
